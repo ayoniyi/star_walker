@@ -29,8 +29,8 @@
     <!-- Modal container -->
     <div id="modalContainer"></div>
 
-    <script src="/misc.js"></script>
-    <script type="module" src="/main.js"></script>
+    <script src="misc.js"></script>
+    <script type="module" src="main.js"></script>
 
     <script>
       // Reference to the audio and button elements
@@ -41,11 +41,11 @@
       function toggleMusic() {
         if (music.paused) {
           music.play();
-          soundIcon.src = "/soundoff.png"; // Change to sound off image
+          soundIcon.src = "soundoff.png"; // Change to sound off image
           soundIcon.alt = "Sound Off";
         } else {
           music.pause();
-          soundIcon.src = "./soundon.png"; // Change to sound on image
+          soundIcon.src = "soundon.png"; // Change to sound on image
           soundIcon.alt = "Sound On";
         }
       }
