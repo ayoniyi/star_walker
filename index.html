@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StarWalker</title>
+    <link rel="stylesheet" href="main.scss" />
+  </head>
+  <body>
+    <canvas></canvas>
+    <div class="btnContainer">
+      <img
+        id="soundIcon"
+        onclick="toggleMusic()"
+        src="./soundon.png"
+        alt="Sound On"
+        width="30"
+        height="30"
+      />
+      <audio
+        id="music"
+        src="./soundtrack-short.mp3"
+        preload="auto"
+        loop
+      ></audio>
+    </div>
+
+    <!-- Modal container -->
+    <div id="modalContainer"></div>
+
+    <script src="/misc.js"></script>
+    <script type="module" src="/main.js"></script>
+
+    <script>
+      // Reference to the audio and button elements
+      const music = document.getElementById("music");
+      const soundIcon = document.getElementById("soundIcon");
+
+      // Function to play or stop the music and change the image
+      function toggleMusic() {
+        if (music.paused) {
+          music.play();
+          soundIcon.src = "/soundoff.png"; // Change to sound off image
+          soundIcon.alt = "Sound Off";
+        } else {
+          music.pause();
+          soundIcon.src = "./soundon.png"; // Change to sound on image
+          soundIcon.alt = "Sound On";
+        }
+      }
+      // Function to set the volume of the music
+      function setVolume(value) {
+        music.volume = value;
+      }
+    </script>
+  </body>
+</html>
