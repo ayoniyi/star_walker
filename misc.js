@@ -1,9 +1,22 @@
 class Modal {
   constructor() {
-    this.modalContainer = document.getElementById("modalContainer");
+    this.modalContainer = null;
+  }
+
+  initialize() {
+    if (!this.modalContainer) {
+      this.modalContainer = document.getElementById("modalContainer");
+      if (!this.modalContainer) {
+        this.modalContainer = document.createElement("div");
+        this.modalContainer.id = "modalContainer";
+        document.body.appendChild(this.modalContainer);
+      }
+    }
   }
 
   createModal(options) {
+    this.initialize();
+
     const modalOverlay = document.createElement("div");
     modalOverlay.className = "modal-overlay";
 
@@ -71,31 +84,37 @@ class Modal {
 // Initialize the modal system
 const modalSystem = new Modal();
 
-// Handle initial modals
-window.onload = async () => {
-  await modalSystem.alert(
-    "Welcome to Star Walker!",
-    "Use the arrow keys or the w, a, s and d keys on your keyboard to move the character around."
-  );
+// Use DOMContentLoaded or ensure the code runs on client-side only
+if (typeof window !== "undefined") {
+  // This ensures the code only runs in browser, not during SSR
+  document.addEventListener("DOMContentLoaded", async () => {
+    // Wait a moment for React to fully hydrate
+    setTimeout(async () => {
+      await modalSystem.alert(
+        "Welcome to Star Walker!",
+        "Use the arrow keys or the w, a, s and d keys on your keyboard to move the character around."
+      );
 
-  await modalSystem.alert(
-    "Sound Controls",
-    "You can toggle the sound by clicking the button on the top right."
-  );
-};
+      await modalSystem.alert(
+        "Sound Controls",
+        "You can toggle the sound by clicking the button on the top right."
+      );
 
-// Handle sound preference modal
-setTimeout(async () => {
-  const playMusic = await modalSystem.confirm(
-    "Sound Settings",
-    "Do you want to turn on the sound?"
-  );
+      // Handle sound preference modal
+      setTimeout(async () => {
+        const playMusic = await modalSystem.confirm(
+          "Sound Settings",
+          "Do you want to turn on the sound?"
+        );
 
-  if (playMusic) {
-    music.play();
-    soundIcon.src = "./soundoff.png";
-  } else {
-    music.pause();
-    soundIcon.src = "./soundon.png";
-  }
-}, 2500);
+        if (playMusic) {
+          music.play();
+          soundIcon.src = "./soundoff.png";
+        } else {
+          music.pause();
+          soundIcon.src = "./soundon.png";
+        }
+      }, 1000);
+    }, 500);
+  });
+}
